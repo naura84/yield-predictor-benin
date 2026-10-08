@@ -1,0 +1,31 @@
+# Une config par culture. Pour une nouvelle culture : copier ce fichier et l'adapter.
+crop: maize
+years: [2000, 2023]
+admin_level: commune          # admin_2 dans l'export FEWS NET (admin_1 = departement)
+
+yields:
+  file: crop_data_2000-2023.json     # a placer dans data/raw/
+  format: json                       # json ou csv
+  # Lignes a garder (egalite exacte sur ces colonnes)
+  filters:
+    product: "Maize (Corn)"
+    indicator: "Yield"
+    season_name: "Main"
+  # Colonnes du fichier -> noms internes
+  columns:
+    admin: admin_2
+    year: season_year                # ex. "Main 2023" -> 2023 (annee de plantation)
+    value: value
+  year_regex: '(\d{4})'
+  missing_values: ["", "NA", "N/A", "-"]
+
+climate:
+  rain: chirps
+  temperature: era5
+  vegetation: modis_ndvi
+
+# Fenetres de la saison (numeros de mois). A verifier : varient entre sud et nord.
+phases:
+  sowing: [4, 5]
+  flowering: [6, 7]
+  harvest: [8, 9]
